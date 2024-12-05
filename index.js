@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json());
 const port = process.env.PORT || 8080;
 const credential = Buffer.from(`${process.env.X_CLIENT_ID}:${process.env.X_CLIENT_SECRET}`).toString('base64');
-const scopes = ['tweet.read', 'tweet.write'].join('%20');
+const scopes = ['tweet.read', 'tweet.write', 'users.read'].join('%20');
 
 app.use(cors());
 
@@ -28,10 +28,11 @@ app.post('/token', async (req, res) => {
         const { state, code } = req.body;
         const params = new URLSearchParams();
         params.append('code', code);
+        params.append('client_id', process.env.X_CLIENT_ID);
         params.append('grant_type', 'authorization_code');
         params.append('redirect_uri', process.env.X_REDIRECT_URI);
         params.append('code_verifier', 'challenge');
-        const token = await axios.post('https://api.x.com/2/oauth2/token', params, { headers: { "Content-Type": "application/x-www-form-urlencoded", Authorization: `Basic ${credential}` } });
+        const token = await axios.post('https://api.x.com/2/oauth2/token', params, { headers: { "Content-Type": "application/x-www-form-urlencoded" } });
         console.log(token.data);
         res.json(token.data);
 
