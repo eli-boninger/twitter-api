@@ -43,4 +43,18 @@ app.post('/token', async (req, res) => {
 
 });
 
+app.post('/tweet', async (req, res) => {
+    const { token } = req.query;
+    if (!token) {
+        return res.sendStatus(401);
+    }
+    try {
+        const result = await axios.post('https://api.x.com/2/tweets', req.body, { headers: { Authorization: `Bearer ${token}` } });
+        res.json(result.data);
+    } catch (e) {
+        res.status(500).json(e);
+    }
+
+});
+
 app.listen(port, () => console.log("Server listening on port " + port));
