@@ -32,11 +32,12 @@ app.post('/token', async (req, res) => {
         params.append('redirect_uri', process.env.X_REDIRECT_URI);
         params.append('code_verifier', 'challenge');
         const token = await axios.post('https://api.x.com/2/oauth2/token', params, { headers: { "Content-Type": "application/x-www-form-urlencoded", Authorization: `Basic ${credential}` } });
-        console.log(res.data);
-        res.json(token);
+        console.log(token.data);
+        res.json(token.data);
 
     } catch (e) {
         console.log(e);
+        res.sendStatus(500);
     }
 
 });
