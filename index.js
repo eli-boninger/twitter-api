@@ -13,7 +13,7 @@ app.use(cors());
 app.get('/', (req, res) => res.send("ROOT GET"));
 
 app.get('/twitter-auth', async (req, res) => {
-    const re = await axios.get(`https://twitter.com/i/oauth2/authorize?response_type=code&client_id=${process.env.X_CLIENT_ID}&redirect_uri=${encodeURI(process.env.X_REDIRECT_URI)}&scope=${scopes}&state=state&code_challenge=challenge&code_challenge_method=plain`, { headers: { Authorization: `Bearer ${credential}` } });
+    const re = await axios.get(`https://twitter.com/i/oauth2/authorize?response_type=code&client_id=${process.env.X_CLIENT_ID}&redirect_uri=${encodeURIComponent(process.env.X_REDIRECT_URI)}&scope=${scopes}&state=state&code_challenge=challenge&code_challenge_method=plain`, { headers: { Authorization: `Bearer ${credential}` } });
     res.sendStatus(200);
 });
 
