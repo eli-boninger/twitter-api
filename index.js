@@ -4,6 +4,7 @@ import cors from 'cors';
 import 'dotenv/config';
 
 const app = express();
+app.use(express.json());
 const port = process.env.PORT || 8080;
 const credential = Buffer.from(`${process.env.X_CLIENT_ID}:${process.env.X_CLIENT_SECRET}`).toString('base64');
 const scopes = ['tweet.read', 'tweet.write'].join('%20');
