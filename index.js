@@ -22,7 +22,7 @@ app.post('/token', async (req, res) => {
     const params = new URLSearchParams();
     params.append('code', code);
     params.append('grant_type', 'authorization_code');
-    params.append('redirect_uri', import.meta.env.VITE_CALLBACK_URI);
+    params.append('redirect_uri', process.env.X_REDIRECT_URI);
     params.append('code_verifier', 'challenge');
     const token = await axios.post('https://api.x.com/2/oauth2/token', params, { headers: { "Content-Type": "application/x-www-form-urlencoded", Authorization: `Bearer ${credential}` } });
     console.log(res.data);
